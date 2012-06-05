@@ -21,9 +21,9 @@ namespace :products do
 	  
 	  @products.each do |p|
       csv << ["Product", 
-        "", 
-        p.id, 
-        p.sku, 
+        "",
+        p.id,
+        p.sku 
         p.name, 
         p.permalink, 
         p.count_on_hand, 
@@ -47,7 +47,15 @@ namespace :products do
         !p.images[2].nil? ? p.images[2].attachment.original_filename : "", 
         p.meta_description, 
         p.meta_keywords, 
-        p.deleted_at]
+        p.deleted_at
+        p.sku,           
+        p.price.to_s,
+        p.weight,
+        p.height,
+        p.width,
+        p.depth,
+        p.cost_price,
+        ]
 		
 		if p.has_variants?
       puts p.name
