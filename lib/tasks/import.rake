@@ -8,7 +8,7 @@ namespace :products do
   
   task :export  => :environment do
   @dir = Dir.glob(File.join(Rails.root, "vendor", "exports", "products" ))
-  @products = Product.find(:all)
+  @products = Spree::Product.find(:all)
   puts "Saving file to #{@dir}"
   
   def brand_name
