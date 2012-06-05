@@ -3,6 +3,7 @@ require 'active_support'
 require 'action_controller'
 include ActionDispatch::TestProcess
 require 'yaml'
+require 'dbf'
 
 # class AuditLogger < Logger
   # def format_message(severity, timestamp, progname, msg)
