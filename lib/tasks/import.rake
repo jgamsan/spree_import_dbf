@@ -17,13 +17,13 @@ namespace :products do
   
   CSV.open("#{Rails.root}/vendor/exports/products/products-#{DateTime.now.strftime('%H-%M-%S-%d-%m-%Y')}.csv", "w") do |csv|
     # header row
-      csv << ["product", "parent_sku", "id", "sku", "name", "permalink", "quantity", "description", "prototype", "category", "gender", "tax_category", "shipping_category", "deleted_at", "shipping_time", "style", "frame_width", "frame_type", "frame_shape", "bridge_width", "eye_size", "arm_length", "image", "image2", "image3", "meta_description", "meta_keywords", "delete"]
+      csv << ["product", "", "id", "sku", "name", "permalink", "quantity", "description", "prototype", "category", "gender", "tax_category", "shipping_category", "deleted_at", "shipping_time", "style", "frame_width", "frame_type", "frame_shape", "bridge_width", "eye_size", "arm_length", "image", "image2", "image3", "meta_description", "meta_keywords", "delete", "price", "weight", "height", "width", "depth", "cost_price"]
 	  
 	  @products.each do |p|
       csv << ["Product", 
         "",
         p.id,
-        p.sku 
+        p.sku, 
         p.name, 
         p.permalink, 
         p.count_on_hand, 
@@ -33,7 +33,7 @@ namespace :products do
         "gender", 
         p.tax_category.name, 
         p.shipping_category.name,
-        p.deleted_at 
+        p.deleted_at, 
         "ship time", 
         "style", 
         "frame_width", 
@@ -47,8 +47,7 @@ namespace :products do
         !p.images[2].nil? ? p.images[2].attachment.original_filename : "", 
         p.meta_description, 
         p.meta_keywords, 
-        p.deleted_at
-        p.sku,           
+        p.deleted_at,          
         p.price.to_s,
         p.weight,
         p.height,
