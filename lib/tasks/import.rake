@@ -35,7 +35,7 @@ namespace :products do
         "", 
         "", 
         Date.today + 1.year,          
-        articulo.pvp1.price.to_s,
+        articulo.pvp1.to_s,
         "",
         "",
         "",
