@@ -12,7 +12,7 @@ namespace :products do
         "",
         articulo.codigo, 
         articulo.nombre, 
-        articulo.name.downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'), 
+        articulo.nombre.downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'), 
         articulo.exmin, 
         "", 
         "prototype", 
