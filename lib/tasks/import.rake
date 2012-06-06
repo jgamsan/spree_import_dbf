@@ -4,7 +4,7 @@ namespace :products do
   task :to_csv  => :environment do
     require 'my_import_products'
     @dir = Dir.glob(File.join(Rails.root, "vendor", "exports", "products" ))
-    articulos = DBF::Table.new("~/Documentos/rodamoto/articulo.dbf")
+    articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
     CSV.open("#{Rails.root}/vendor/exports/products/products-#{DateTime.now.strftime('%H-%M-%S-%d-%m-%Y')}.csv", "w") do |csv|
       csv << ["product", "", "sku", "name", "permalink", "quantity", "description", "prototype", "category", "gender", "tax_category", "shipping_category", "deleted_at", "shipping_time", "style", "frame_width", "frame_type", "frame_shape", "bridge_width", "eye_size", "arm_length", "image", "image2", "image3", "meta_description", "meta_keywords", "delete", "price", "weight", "height", "width", "depth", "cost_price"]
       articulos.each do |articulo|
