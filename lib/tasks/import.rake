@@ -1,5 +1,13 @@
 namespace :products do
 
+  desc "Import products to spree database."
+  task :to_rodamoto => :environment do
+    articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
+    articulos.each do |element|
+      
+    end
+  end
+  
   desc "Make a txt/csv file."
   task :to_csv  => :environment do
     require 'my_import_products'
