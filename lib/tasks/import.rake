@@ -2,10 +2,26 @@ namespace :products do
 
   desc "Import products to spree database."
   task :to_rodamoto => :environment do
-    CATART = [21, 22, 23, 24, 25, 26, 27, 28]
-    MOTOS = Hash[21, 4, 23, 5, 27, 7, ]
+    require 'my_import_products'
     articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
-    
+    for i in 1..5 do
+      @product = Spree::Product.new
+      @product.name = articulos.find(i).attributes["nombre"]
+      @product.permalink = articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
+      @product.count_on_hand = 5
+      @product.sku = articulos.find(i).attributes["codigo"]
+      @product.price = articulos.find(i).attributes["pvp3"]
+      @product.cost_price = articulos.find(i).attributes["pvp1"]
+      @product.tire_width_id = Spree::TireWidth.find_by_name(articulos.find(i).attributes["ancho"]).id
+      @product.tire_profile_id = Spree::TireProfile.find_by_name(articulos.find(i).attributes["perfil"]).id
+      @product.tire_innertube_id = Spree::TireInnertube.find_by_name(articulos.find(i).attributes["llanta"]).id
+      @product.tire_ic_id = Spree::TireIc.find_by_name(articulos.find(i).attributes["ic"]).id
+      @product.tire_speed_code_id = Spree::TireSpeedCode.find_by_name(articulos.find(i).attributes["vel"]).id
+      @product.tire_fr_id = Spree::TireFr.find_by_name(articulos.find(i).attributes["fr"]).id
+      @product.tire_tttl_id = Spree::TireTttl.find_by_name(articulos.find(i).attributes["tttl"]).id
+      @product.taxons << set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
+      @product.taxons << set_brand(articulos.find(i).attributes["clamar"])
+    end
   end
   
   desc "Make a txt/csv file."
