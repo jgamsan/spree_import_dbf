@@ -12,13 +12,13 @@ namespace :products do
       @product.sku = articulos.find(i).attributes["codigo"]
       @product.price = articulos.find(i).attributes["pvp3"]
       @product.cost_price = articulos.find(i).attributes["pvp1"]
-      @product.tire_width_id = Spree::TireWidth.find_by_name(articulos.find(i).attributes["ancho"]).id
-      @product.tire_profile_id = Spree::TireProfile.find_by_name(articulos.find(i).attributes["perfil"]).id
-      @product.tire_innertube_id = Spree::TireInnertube.find_by_name(articulos.find(i).attributes["llanta"]).id
-      @product.tire_ic_id = Spree::TireIc.find_by_name(articulos.find(i).attributes["ic"]).id
-      @product.tire_speed_code_id = Spree::TireSpeedCode.find_by_name(articulos.find(i).attributes["vel"]).id
-      @product.tire_fr_id = Spree::TireFr.find_by_name(articulos.find(i).attributes["fr"]).id
-      @product.tire_tttl_id = Spree::TireTttl.find_by_name(articulos.find(i).attributes["tttl"]).id
+      @product.tire_width_id = Spree::TireWidth.find_by_name(articulos.find(i).attributes["ancho"].to_s).id
+      @product.tire_profile_id = Spree::TireProfile.find_by_name(articulos.find(i).attributes["perfil"].to_s).id
+      @product.tire_innertube_id = Spree::TireInnertube.find_by_name(articulos.find(i).attributes["llanta"].to_s).id
+      @product.tire_ic_id = Spree::TireIc.find_by_name(articulos.find(i).attributes["ic"].to_s).id
+      @product.tire_speed_code_id = Spree::TireSpeedCode.find_by_name(articulos.find(i).attributes["vel"].to_s).id
+      @product.tire_fr_id = Spree::TireFr.find_by_name(articulos.find(i).attributes["fr"].to_s).id
+      @product.tire_tttl_id = Spree::TireTttl.find_by_name(articulos.find(i).attributes["tttl"].to_s).id
       @product.taxons << set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
       @product.taxons << set_brand(articulos.find(i).attributes["clamar"])
     end
