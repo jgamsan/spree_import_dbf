@@ -2,10 +2,10 @@ namespace :products do
 
   desc "Import products to spree database."
   task :to_rodamoto => :environment do
+    CATART = [21, 22, 23, 24, 25, 26, 27, 28]
+    MOTOS = Hash[21, 4, 23, 5, 27, 7, ]
     articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
-    articulos.each do |element|
-      
-    end
+    
   end
   
   desc "Make a txt/csv file."
