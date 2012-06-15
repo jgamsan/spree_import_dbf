@@ -127,56 +127,6 @@ class ImportProducts
     end
   end
   
-  def set_catalog(clasub, clatipart, clacat)
-    if clacat == 21
-      case clasub
-        when 28
-          return 10
-        when 29
-          return 4
-        when 30
-          return 13
-      end
-    else
-      case clatipart
-        when 73
-          case clasub
-            when 28
-              return 10
-            when 29
-              return 5
-            when 30
-              return 14
-          end
-        when 81
-          return 6
-        when 83
-          return 7
-        when 80
-          return 8
-        when 64
-          return 16
-        when 79
-          return 17
-        when 65
-          return 18
-        when 77
-          return 19
-        when 78
-          return 20
-        when 85
-          return 21
-        when 84
-          return 22   
-      end
-    end
-  end
-  
-  def set_brand(clamar)
-    22 + clamar.to_i
-  end
-  
-  
   def set_category(product , row)
     category = Taxon.find_by_name(at_in(:category1, row))
     if category

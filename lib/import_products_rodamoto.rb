@@ -20,15 +20,21 @@ class ImportProductsRodamoto
       @product.sku = articulos.find(i).attributes["codigo"]
       @product.price = articulos.find(i).attributes["pvp3"]
       @product.cost_price = articulos.find(i).attributes["pvp1"]
-      @product.tire_width_id = Spree::TireWidth.find_by_name(articulos.find(i).attributes["ancho"].to_s).id
-      @product.tire_profile_id = Spree::TireProfile.find_by_name(articulos.find(i).attributes["perfil"].to_s).id
-      @product.tire_innertube_id = Spree::TireInnertube.find_by_name(articulos.find(i).attributes["llanta"].to_s).id
-      @product.tire_ic_id = Spree::TireIc.find_by_name(articulos.find(i).attributes["ic"].to_s).id
-      @product.tire_speed_code_id = Spree::TireSpeedCode.find_by_name(articulos.find(i).attributes["vel"].to_s).id
-      @product.tire_fr_id = Spree::TireFr.find_by_name(articulos.find(i).attributes["fr"].to_s).id
-      @product.tire_tttl_id = Spree::TireTttl.find_by_name(articulos.find(i).attributes["tttl"].to_s).id
+      
+      @product.tire_width_id = set_width(i)
+      @product.tire_profile_id = set_profile(i)
+      @product.tire_innertube_id = set_innertube(i)
+      @product.tire_ic_id = set_ic(i)
+      @product.tire_speed_code_id = set_speed_code(i)
+      @product.tire_fr_id = set_fr(i)
+      @product.tire_tttl_id = set_tttl(i)
+      
       @product.taxons << set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
+      
       @product.taxons << set_brand(articulos.find(i).attributes["clamar"])
+      if @product.save!
+        puts "grabado articulo" + @product.name
+      end      
     end
   end
   
@@ -81,4 +87,38 @@ class ImportProductsRodamoto
     22 + clamar.to_i
   end
   
+  def set_width(i)
+    ancho = articulos.find(i).attributes["ancho"]
+    ancho == "" ? ancho : Spree::TireWidth.find_by_name(ancho.to_s).id
+  end
+  
+  def set_profile(i)
+    perfil = articulos.find(i).attributes["perfil"]
+    perfil == "" ? perfil : Spree::TireProfile.find_by_name(perfil.to_s).id
+  end
+  
+  def set_innertube(i)
+    llanta = articulos.find(i).attributes["llanta"]
+    llanta == "" ? llanta : Spree::TireInnertube.find_by_name(llanta.to_s).id
+  end
+  
+  def set_ic(i)
+    ic = articulos.find(i).attributes["ic"]
+    ic == "" ? ic : Spree::TireIc.find_by_name(ic.to_s).id
+  end
+  
+  def set_speed_code(i)
+    vel = articulos.find(i).attributes["vel"]
+    vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id
+  end
+  
+  def set_fr(i)
+    fr = articulos.find(i).attributes["fr"]
+    fr == "" ? fr : Spree::TireFr.find_by_name(fr.to_s).id
+  end
+  
+  def set_tttl(i)
+    tttl = articulos.find(i).attributes["tttl"]
+    tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id
+  end
 end

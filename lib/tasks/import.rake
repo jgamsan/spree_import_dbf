@@ -2,37 +2,8 @@ namespace :products do
 
   desc "Import products to spree database."
   task :to_rodamoto => :environment do
-    require 'my_import_products'
-    articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
-    for i in 1..5 do
-      @product = Spree::Product.new
-      @product.name = articulos.find(i).attributes["nombre"]
-      @product.permalink = articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
-      @product.count_on_hand = 5
-      @product.sku = articulos.find(i).attributes["codigo"]
-      @product.price = articulos.find(i).attributes["pvp3"]
-      @product.cost_price = articulos.find(i).attributes["pvp1"]
-      ancho = articulos.find(i).attributes["ancho"]
-      perfil = articulos.find(i).attributes["perfil"]
-      llanta = articulos.find(i).attributes["llanta"]
-      ic = articulos.find(i).attributes["ic"]
-      vel = articulos.find(i).attributes["vel"]
-      fr = articulos.find(i).attributes["fr"]
-      tttl = articulos.find(i).attributes["tttl"]
-      
-      @product.tire_width_id = (ancho == "" ? ancho : Spree::TireWidth.find_by_name(ancho.to_s).id)
-      @product.tire_profile_id = (perfil == "" ? perfil : Spree::TireProfile.find_by_name(perfil.to_s).id)
-      @product.tire_innertube_id = (llanta == "" ? llanta : Spree::TireInnertube.find_by_name(llanta.to_s).id)
-      @product.tire_ic_id = (ic == "" ? ic : Spree::TireIc.find_by_name(ic.to_s).id)
-      @product.tire_speed_code_id = (vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id)
-      @product.tire_fr_id = (fr == "" ? fr : Spree::TireFr.find_by_name(fr.to_s).id)
-      @product.tire_tttl_id = (tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id)
-      @product.taxons << ImportProducts::set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
-      @product.taxons << ImportProducts::set_brand(articulos.find(i).attributes["clamar"])
-      if @product.save!
-        puts "grabado articulo" + @product.name
-      end      
-    end
+    require 'import_products_rodamoto'
+    ImportProductsRodamoto.new.run
   end
   
   desc "Make a txt/csv file."
