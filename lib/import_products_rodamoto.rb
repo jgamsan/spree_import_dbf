@@ -29,9 +29,9 @@ class ImportProductsRodamoto
       @product.tire_fr_id = set_fr(i)
       @product.tire_tttl_id = set_tttl(i)
       
-      @product.taxons << set_catalog(@articulos.find(i).attributes["clasub"], @articulos.find(i).attributes["clatipart"], @articulos.find(i).attributes["clacat"])
+      @product.taxons << Spree::Taxon.find(set_catalog(@articulos.find(i).attributes["clasub"], @articulos.find(i).attributes["clatipart"], @articulos.find(i).attributes["clacat"]))
       
-      @product.taxons << set_brand(@articulos.find(i).attributes["clamar"])
+      @product.taxons << Spree::Taxon.find(set_brand(@articulos.find(i).attributes["clamar"]))
       if @product.save!
         puts "grabado articulo" + @product.name
       end      
