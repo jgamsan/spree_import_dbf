@@ -27,8 +27,8 @@ namespace :products do
       @product.tire_speed_code_id = (vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id)
       @product.tire_fr_id = (fr == "" ? fr : Spree::TireFr.find_by_name(fr.to_s).id)
       @product.tire_tttl_id = (tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id)
-      @product.taxons << MyImportProducts::set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
-      @product.taxons << MyImportProducts::set_brand(articulos.find(i).attributes["clamar"])
+      @product.taxons << MyImportProducts.set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
+      @product.taxons << MyImportProducts.set_brand(articulos.find(i).attributes["clamar"])
       if @product.save!
         puts "grabado articulo" + @product.name
       end      
