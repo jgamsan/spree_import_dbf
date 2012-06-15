@@ -14,7 +14,7 @@ class ImportProductsRodamoto
   def run
     for i in 1..5 do
       @product = Spree::Product.new
-      @product.name = articulos.find(i).attributes["nombre"]
+      @product.name = @articulos.find(i).attributes["nombre"]
       @product.permalink = @articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
       @product.count_on_hand = 5
       @product.sku = @articulos.find(i).attributes["codigo"]
