@@ -13,28 +13,30 @@ class ImportProductsRodamoto
   
   def run
     for i in 1..5 do
-      @product = Spree::Product.new
-      @product.name = @articulos.find(i).attributes["nombre"]
-      @product.permalink = @articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
-      @product.count_on_hand = 5
-      @product.sku = @articulos.find(i).attributes["codigo"]
-      @product.price = @articulos.find(i).attributes["pvp3"]
-      @product.cost_price = @articulos.find(i).attributes["pvp1"]
-      
-      @product.tire_width_id = set_width(i)
-      @product.tire_profile_id = set_profile(i)
-      @product.tire_innertube_id = set_innertube(i)
-      @product.tire_ic_id = set_ic(i)
-      @product.tire_speed_code_id = set_speed_code(i)
-      @product.tire_fr_id = set_fr(i)
-      @product.tire_tttl_id = set_tttl(i)
-      
-      @product.taxons << Spree::Taxon.find(set_catalog(@articulos.find(i).attributes["clasub"].to_i, @articulos.find(i).attributes["clatipart"].to_i, @articulos.find(i).attributes["clacat"].to_i))
-      
-      @product.taxons << Spree::Taxon.find(set_brand(@articulos.find(i).attributes["clamar"].to_i))
-      if @product.save!
-        puts "grabado articulo" + @product.name
-      end      
+      unless @articulos.find(i).attributes["clasub"] == 0
+        @product = Spree::Product.new
+        @product.name = @articulos.find(i).attributes["nombre"]
+        @product.permalink = @articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
+        @product.count_on_hand = 5
+        @product.sku = @articulos.find(i).attributes["codigo"]
+        @product.price = @articulos.find(i).attributes["pvp3"]
+        @product.cost_price = @articulos.find(i).attributes["pvp1"]
+        
+        @product.tire_width_id = set_width(i)
+        @product.tire_profile_id = set_profile(i)
+        @product.tire_innertube_id = set_innertube(i)
+        @product.tire_ic_id = set_ic(i)
+        @product.tire_speed_code_id = set_speed_code(i)
+        @product.tire_fr_id = set_fr(i)
+        @product.tire_tttl_id = set_tttl(i)
+        
+        @product.taxons << Spree::Taxon.find(set_catalog(@articulos.find(i).attributes["clasub"].to_i, @articulos.find(i).attributes["clatipart"].to_i, @articulos.find(i).attributes["clacat"].to_i))
+        
+        @product.taxons << Spree::Taxon.find(set_brand(@articulos.find(i).attributes["clamar"].to_i))
+        if @product.save!
+          puts "grabado articulo" + @product.name
+        end      
+      end
     end
   end
   
