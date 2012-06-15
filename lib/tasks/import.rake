@@ -12,15 +12,26 @@ namespace :products do
       @product.sku = articulos.find(i).attributes["codigo"]
       @product.price = articulos.find(i).attributes["pvp3"]
       @product.cost_price = articulos.find(i).attributes["pvp1"]
-      @product.tire_width_id = Spree::TireWidth.find_by_name(articulos.find(i).attributes["ancho"].to_s).id
-      @product.tire_profile_id = Spree::TireProfile.find_by_name(articulos.find(i).attributes["perfil"].to_s).id
-      @product.tire_innertube_id = Spree::TireInnertube.find_by_name(articulos.find(i).attributes["llanta"].to_s).id
-      @product.tire_ic_id = Spree::TireIc.find_by_name(articulos.find(i).attributes["ic"].to_s).id
-      @product.tire_speed_code_id = Spree::TireSpeedCode.find_by_name(articulos.find(i).attributes["vel"].to_s).id
-      @product.tire_fr_id = Spree::TireFr.find_by_name(articulos.find(i).attributes["fr"].to_s).id
-      @product.tire_tttl_id = Spree::TireTttl.find_by_name(articulos.find(i).attributes["tttl"].to_s).id
-      @product.taxons << set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
-      @product.taxons << set_brand(articulos.find(i).attributes["clamar"])
+      ancho = articulos.find(i).attributes["ancho"]
+      perfil = articulos.find(i).attributes["perfil"]
+      llanta = articulos.find(i).attributes["llanta"]
+      ic = articulos.find(i).attributes["ic"]
+      vel = articulos.find(i).attributes["vel"]
+      fr = articulos.find(i).attributes["fr"]
+      tttl = articulos.find(i).attributes["tttl"]
+      
+      @product.tire_width_id = (ancho == "" ? ancho : Spree::TireWidth.find_by_name(ancho.to_s).id)
+      @product.tire_profile_id = (perfil == "" ? perfil : Spree::TireProfile.find_by_name(perfil.to_s).id)
+      @product.tire_innertube_id = (llanta == "" ? llanta : Spree::TireInnertube.find_by_name(llanta.to_s).id)
+      @product.tire_ic_id = (ic == "" ? ic : Spree::TireIc.find_by_name(ic.to_s).id)
+      @product.tire_speed_code_id = (vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id)
+      @product.tire_fr_id = (fr == "" ? fr : Spree::TireFr.find_by_name(fr.to_s).id)
+      @product.tire_tttl_id = (tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id)
+      @product.taxons << ImportProducts::set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
+      @product.taxons << ImportProducts::set_brand(articulos.find(i).attributes["clamar"])
+      if @product.save!
+        puts "grabado articulo" + @product.name
+      end      
     end
   end
   
