@@ -8,18 +8,18 @@ require 'dbf'
 class ImportProductsRodamoto
   
   def initialize()
-    articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
+    @articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
   end
   
   def run
     for i in 1..5 do
       @product = Spree::Product.new
       @product.name = articulos.find(i).attributes["nombre"]
-      @product.permalink = articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
+      @product.permalink = @articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
       @product.count_on_hand = 5
-      @product.sku = articulos.find(i).attributes["codigo"]
-      @product.price = articulos.find(i).attributes["pvp3"]
-      @product.cost_price = articulos.find(i).attributes["pvp1"]
+      @product.sku = @articulos.find(i).attributes["codigo"]
+      @product.price = @articulos.find(i).attributes["pvp3"]
+      @product.cost_price = @articulos.find(i).attributes["pvp1"]
       
       @product.tire_width_id = set_width(i)
       @product.tire_profile_id = set_profile(i)
@@ -29,9 +29,9 @@ class ImportProductsRodamoto
       @product.tire_fr_id = set_fr(i)
       @product.tire_tttl_id = set_tttl(i)
       
-      @product.taxons << set_catalog(articulos.find(i).attributes["clasub"], articulos.find(i).attributes["clatipart"], articulos.find(i).attributes["clacat"])
+      @product.taxons << set_catalog(@articulos.find(i).attributes["clasub"], @articulos.find(i).attributes["clatipart"], @articulos.find(i).attributes["clacat"])
       
-      @product.taxons << set_brand(articulos.find(i).attributes["clamar"])
+      @product.taxons << set_brand(@articulos.find(i).attributes["clamar"])
       if @product.save!
         puts "grabado articulo" + @product.name
       end      
@@ -88,37 +88,37 @@ class ImportProductsRodamoto
   end
   
   def set_width(i)
-    ancho = articulos.find(i).attributes["ancho"]
+    ancho = @articulos.find(i).attributes["ancho"]
     ancho == "" ? ancho : Spree::TireWidth.find_by_name(ancho.to_s).id
   end
   
   def set_profile(i)
-    perfil = articulos.find(i).attributes["perfil"]
+    perfil = @articulos.find(i).attributes["perfil"]
     perfil == "" ? perfil : Spree::TireProfile.find_by_name(perfil.to_s).id
   end
   
   def set_innertube(i)
-    llanta = articulos.find(i).attributes["llanta"]
+    llanta = @articulos.find(i).attributes["llanta"]
     llanta == "" ? llanta : Spree::TireInnertube.find_by_name(llanta.to_s).id
   end
   
   def set_ic(i)
-    ic = articulos.find(i).attributes["ic"]
+    ic = @articulos.find(i).attributes["ic"]
     ic == "" ? ic : Spree::TireIc.find_by_name(ic.to_s).id
   end
   
   def set_speed_code(i)
-    vel = articulos.find(i).attributes["vel"]
+    vel = @articulos.find(i).attributes["vel"]
     vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id
   end
   
   def set_fr(i)
-    fr = articulos.find(i).attributes["fr"]
+    fr = @articulos.find(i).attributes["fr"]
     fr == "" ? fr : Spree::TireFr.find_by_name(fr.to_s).id
   end
   
   def set_tttl(i)
-    tttl = articulos.find(i).attributes["tttl"]
+    tttl = @articulos.find(i).attributes["tttl"]
     tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id
   end
 end
