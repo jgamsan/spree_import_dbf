@@ -34,7 +34,8 @@ class ImportProductsRodamoto
         
         @product.taxons << Spree::Taxon.find(set_brand(@articulos.find(i).attributes["clamar"].to_i))
         if @product.save!
-          print "grabado articulo" + @product.name
+          print "grabado articulo #{i} de 300: #{@product.name}" 
+          print "\r"
         end      
       end
     end
