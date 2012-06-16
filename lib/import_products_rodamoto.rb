@@ -12,8 +12,8 @@ class ImportProductsRodamoto
   end
   
   def run
-    for i in 1..5 do
-      unless @articulos.find(i).attributes["clasub"] == 0
+    for i in 1..20 do
+      unless @articulos.find(i).attributes["baja"] == true
         @product = Spree::Product.new
         @product.name = @articulos.find(i).attributes["nombre"]
         @product.permalink = @articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
