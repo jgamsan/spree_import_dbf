@@ -12,7 +12,7 @@ class ImportProductsRodamoto
   end
   
   def run
-    for i in 1..20 do
+    for i in 1..100 do
       unless @articulos.find(i).attributes["baja"] == true
         @product = Spree::Product.new
         @product.name = @articulos.find(i).attributes["nombre"]
@@ -34,7 +34,7 @@ class ImportProductsRodamoto
         
         @product.taxons << Spree::Taxon.find(set_brand(@articulos.find(i).attributes["clamar"].to_i))
         if @product.save!
-          puts "grabado articulo" + @product.name
+          print "grabado articulo" + @product.name
         end      
       end
     end
