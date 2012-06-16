@@ -12,7 +12,7 @@ class ImportProductsRodamoto
   end
   
   def run
-    for i in 1..100 do
+    for i in 101..300 do
       unless @articulos.find(i).attributes["baja"] == true
         @product = Spree::Product.new
         @product.name = @articulos.find(i).attributes["nombre"]
@@ -21,7 +21,7 @@ class ImportProductsRodamoto
         @product.sku = @articulos.find(i).attributes["codigo"]
         @product.price = @articulos.find(i).attributes["pvp3"]
         @product.cost_price = @articulos.find(i).attributes["pvp1"]
-        
+        @product.available_on = Date.today - 1.day
         @product.tire_width_id = set_width(i)
         @product.tire_profile_id = set_profile(i)
         @product.tire_innertube_id = set_innertube(i)
