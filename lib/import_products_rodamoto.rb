@@ -9,35 +9,40 @@ class ImportProductsRodamoto
   
   def initialize()
     @articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
+    @total = @articulos.count
   end
   
   def run
-    for i in 101..300 do
-      unless @articulos.find(i).attributes["baja"] == true
+    i = j = 1
+    articulos.each do |articulo|
+      unless articulo.baja == true
         @product = Spree::Product.new
-        @product.name = @articulos.find(i).attributes["nombre"]
-        @product.permalink = @articulos.find(i).attributes["nombre"].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
-        @product.count_on_hand = 5
-        @product.sku = @articulos.find(i).attributes["codigo"]
-        @product.price = @articulos.find(i).attributes["pvp3"]
-        @product.cost_price = @articulos.find(i).attributes["pvp1"]
+        @product.name = articulo.nombre
+        @product.permalink = articulo.nombre.downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
+        @product.count_on_hand = articulo.exmin
+        
+        @product.sku = articulo.codigo
+        @product.price = articulos.pvp3
+        @product.cost_price = articulos.pvp1
         @product.available_on = Date.today - 1.day
-        @product.tire_width_id = set_width(i)
-        @product.tire_profile_id = set_profile(i)
-        @product.tire_innertube_id = set_innertube(i)
-        @product.tire_ic_id = set_ic(i)
-        @product.tire_speed_code_id = set_speed_code(i)
-        @product.tire_fr_id = set_fr(i)
-        @product.tire_tttl_id = set_tttl(i)
+        @product.tire_width_id = set_width(articulo)
+        @product.tire_profile_id = set_profile(articulo)
+        @product.tire_innertube_id = set_innertube(articulo)
+        @product.tire_ic_id = set_ic(articulo)
+        @product.tire_speed_code_id = set_speed_code(articulo)
+        @product.tire_fr_id = set_fr(articulo)
+        @product.tire_tttl_id = set_tttl(articulo)
         
-        @product.taxons << Spree::Taxon.find(set_catalog(@articulos.find(i).attributes["clasub"].to_i, @articulos.find(i).attributes["clatipart"].to_i, @articulos.find(i).attributes["clacat"].to_i))
+        @product.taxons << Spree::Taxon.find(set_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i))
         
-        @product.taxons << Spree::Taxon.find(set_brand(@articulos.find(i).attributes["clamar"].to_i))
+        @product.taxons << Spree::Taxon.find(set_brand(articulo.clamar.to_i))
         if @product.save!
-          print "grabado articulo #{i} de 300: #{@product.name}" 
+          print "Grabado articulo #{i} de: #{@product.name} => Total de baja #{j} => Registro total #{i+j} de #{@total}" 
           print "\r"
+          i += 1
         end      
       end
+      j += 1
     end
   end
   
@@ -90,38 +95,38 @@ class ImportProductsRodamoto
     22 + clamar.to_i
   end
   
-  def set_width(i)
-    ancho = @articulos.find(i).attributes["ancho"]
+  def set_width(articulo)
+    ancho = articulo.ancho
     ancho == "" ? ancho : Spree::TireWidth.find_by_name(ancho.to_s).id
   end
   
-  def set_profile(i)
-    perfil = @articulos.find(i).attributes["perfil"]
+  def set_profile(articulo)
+    perfil = articulo.perfil
     perfil == "" ? perfil : Spree::TireProfile.find_by_name(perfil.to_s).id
   end
   
-  def set_innertube(i)
-    llanta = @articulos.find(i).attributes["llanta"]
+  def set_innertube(articulo)
+    llanta = articulo.llanta
     llanta == "" ? llanta : Spree::TireInnertube.find_by_name(llanta.to_s).id
   end
   
-  def set_ic(i)
-    ic = @articulos.find(i).attributes["ic"]
+  def set_ic(articulo)
+    ic = articulo.ic
     ic == "" ? ic : Spree::TireIc.find_by_name(ic.to_s).id
   end
   
-  def set_speed_code(i)
-    vel = @articulos.find(i).attributes["vel"]
+  def set_speed_code(articulo)
+    vel = articulo.vel
     vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id
   end
   
-  def set_fr(i)
-    fr = @articulos.find(i).attributes["fr"]
+  def set_fr(articulo)
+    fr = articulo.fr
     fr == "" ? fr : Spree::TireFr.find_by_name(fr.to_s).id
   end
   
-  def set_tttl(i)
-    tttl = @articulos.find(i).attributes["tttl"]
+  def set_tttl(articulo)
+    tttl = articulo.tttl
     tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id
   end
 end
