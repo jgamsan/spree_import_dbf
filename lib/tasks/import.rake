@@ -6,6 +6,12 @@ namespace :products do
     ImportProductsRodamoto.new.run
   end
   
+  desc "Import habtm to spree database."
+  task :to_habtm => :environment do
+    require 'set_habtm_for_rodamoto'
+    SetHabtmForRodamoto.new.run
+  end
+  
   desc "Make a txt/csv file."
   task :to_csv  => :environment do
     require 'my_import_products'

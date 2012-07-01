@@ -33,6 +33,11 @@ class ImportProductsRodamoto
         @product.tire_fr_id = set_fr(articulo)
         @product.tire_tttl_id = set_tttl(articulo)
         
+        @product.pvp3 = articulo.pvp3
+        @product.pvp7 = articulo.pvp7
+        @product.pvp9 = articulo.pvp9
+        @product.pvp12 = articulo.pvp12
+        
         @product.taxons << Spree::Taxon.find(set_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i))
         
         @product.taxons << Spree::Taxon.find(set_brand(articulo.clamar.to_i))
