@@ -53,7 +53,7 @@ class SetHabtmForRodamoto
       else
         @row_new[6] = Spree::TireTttl.find_by_name(row[6].to_s).id
       end
-      @total << @row_new
+      @total << [@row_new[0], @row_new[1], @row_new[2], @row_new[3], @row_new[4], @row_new[5], @row_new[6]]
       i += 1
     end
     CSV.open(@file_final, "wb") do |csv|
