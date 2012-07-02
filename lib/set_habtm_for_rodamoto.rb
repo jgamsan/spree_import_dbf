@@ -16,7 +16,7 @@ class SetHabtmForRodamoto
   def run
     i = 1
     CSV.foreach(@file) do |row|
-      print "Item tratado nº #{i}"
+      print "Item tratado #{i}"
       print "\r" 
       if row[0] == ""
         @row_new[0] = ""
