@@ -7,7 +7,7 @@ include ActionDispatch::TestProcess
 class SetHabtmForRodamoto
 
   def initialize()
-    @file = "/home/jose/RubymineProjects/habtm.csv"
+    @file = "/home/jose/RubymineProjects/archivos/habtm.csv"
     @file_final = "/home/jose/RubymineProjects/habtm_final.csv"
     @total = []
     @row_new = []
