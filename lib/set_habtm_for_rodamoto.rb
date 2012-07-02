@@ -14,8 +14,9 @@ class SetHabtmForRodamoto
   end
   
   def run
+    i = 1
     CSV.foreach(@file) do |row|
-      print "Item tratado #{row[0] row[1] row[2] row[3] row[4] row[5] row[6]}"
+      print "Item tratado nº #{i}"
       print "\r" 
       if row[0] == ""
         @row_new[0] = ""
@@ -53,6 +54,7 @@ class SetHabtmForRodamoto
         @row_new[6] = Spree::TireTttl.find_by_name(row[6]).id
       end
       @total << @row_new
+      i += 1
     end
     CSV.open(@file_final, "wb") do |csv|
       @total.each do |row|
