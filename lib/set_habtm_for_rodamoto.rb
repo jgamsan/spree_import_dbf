@@ -18,37 +18,37 @@ class SetHabtmForRodamoto
     CSV.foreach(@file) do |row|
       print "Item tratado #{i}"
       print "\r" 
-      if row[0] == ""
+      if row[0] == nil
         @row_new[0] = ""
       else
         @row_new[0] = Spree::TireWidth.find_by_name(row[0].to_s).id
       end
-      if row[1] == ""
+      if row[1] == nil
         @row_new[1] = ""
       else
         @row_new[1] = Spree::TireProfile.find_by_name(row[1].to_s).id
       end
-      if row[2] == ""
+      if row[2] == nil
         @row_new[2] = ""
       else
         @row_new[2] = Spree::TireInnertube.find_by_name(row[2].to_s).id
       end
-      if row[3] == ""
+      if row[3] == nil
         @row_new[3] = ""
       else
         @row_new[3] = Spree::TireIc.find_by_name(row[3].to_s).id
       end
-      if row[4] == ""
+      if row[4] == nil
         @row_new[4] = ""
       else
         @row_new[4] = Spree::TireSpeedCode.find_by_name(row[4].to_s).id
       end
-      if row[5] == ""
+      if row[5] == nil
         @row_new[5] = ""
       else
         @row_new[5] = Spree::TireFr.find_by_name(row[5].to_s).id
       end
-      if row[6] == ""
+      if row[6] == nil
         @row_new[6] = ""
       else
         @row_new[6] = Spree::TireTttl.find_by_name(row[6].to_s).id
