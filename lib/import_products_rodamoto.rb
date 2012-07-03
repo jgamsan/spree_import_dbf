@@ -22,8 +22,8 @@ class ImportProductsRodamoto
         @product.count_on_hand = articulo.exmin
         
         @product.sku = articulo.codigo
-        @product.price = articulos.pvp3
-        @product.cost_price = articulos.pvp1
+        @product.price = articulo.pvp3
+        @product.cost_price = articulo.pvp1
         @product.available_on = Date.today - 1.day
         @product.tire_width_id = set_width(articulo)
         @product.tire_profile_id = set_profile(articulo)
