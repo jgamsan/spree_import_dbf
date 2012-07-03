@@ -49,7 +49,7 @@ class ImportProductsRodamoto
           end
         end
         n += 1
-        puts "Llevo #{n} articulos ya almacenados"      
+        puts "Llevo #{n} articulos ya almacenados. Articulo #{articulo.codigo}"      
       end
       j += 1
     end
