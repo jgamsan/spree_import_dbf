@@ -13,7 +13,7 @@ class ImportProductsRodamoto
   end
   
   def run
-    i = j = 1
+    i = j = n = 1
     @articulos.each do |articulo|
       unless articulo.baja == true
         unless Spree::Variant.exists?(:sku => articulo.codigo)
@@ -47,7 +47,9 @@ class ImportProductsRodamoto
             print "\r"
             i += 1
           end
-        end      
+        end
+        n += 1
+        puts "Llevo #{n} articulos ya almacenados"      
       end
       j += 1
     end
