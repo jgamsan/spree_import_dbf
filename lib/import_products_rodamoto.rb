@@ -15,7 +15,7 @@ class ImportProductsRodamoto
   def run
     i = j = 1
     @articulos.each do |articulo|
-      unless articulo.baja == true
+      unless articulo.baja == true || Spree::Variant.exists?(:sku => articulo.codigo)
         @product = Spree::Product.new
         @product.name = articulo.nombre
         @product.permalink = articulo.nombre.downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
@@ -102,36 +102,36 @@ class ImportProductsRodamoto
   
   def set_width(articulo)
     ancho = articulo.ancho
-    ancho == "" ? ancho : Spree::TireWidth.find_by_name(ancho.to_s).id
+    ancho == nil ? ancho : Spree::TireWidth.find_by_name(ancho.to_s).id
   end
   
   def set_profile(articulo)
     perfil = articulo.perfil
-    perfil == "" ? perfil : Spree::TireProfile.find_by_name(perfil.to_s).id
+    perfil == nil ? perfil : Spree::TireProfile.find_by_name(perfil.to_s).id
   end
   
   def set_innertube(articulo)
     llanta = articulo.llanta
-    llanta == "" ? llanta : Spree::TireInnertube.find_by_name(llanta.to_s).id
+    llanta == nil ? llanta : Spree::TireInnertube.find_by_name(llanta.to_s).id
   end
   
   def set_ic(articulo)
     ic = articulo.ic
-    ic == "" ? ic : Spree::TireIc.find_by_name(ic.to_s).id
+    ic == nil ? ic : Spree::TireIc.find_by_name(ic.to_s).id
   end
   
   def set_speed_code(articulo)
     vel = articulo.vel
-    vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id
+    vel == nil ? vel : Spree::TireSpeedCode.find_by_name(vel.to_s).id
   end
   
   def set_fr(articulo)
     fr = articulo.fr
-    fr == "" ? fr : Spree::TireFr.find_by_name(fr.to_s).id
+    fr == nil ? fr : Spree::TireFr.find_by_name(fr.to_s).id
   end
   
   def set_tttl(articulo)
     tttl = articulo.tttl
-    tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id
+    tttl == nil ? tttl : Spree::TireTttl.find_by_name(tttl.to_s).id
   end
 end
