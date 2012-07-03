@@ -15,7 +15,7 @@ class ImportProductsRodamoto
   def run
     i = j = 1
     @articulos.each do |articulo|
-      unless (articulo.baja == true || Spree::Variant.exists?(:sku => articulo.codigo.to_s))
+      unless articulo.baja == true || Spree::Variant.exists?(:sku => articulo.codigo.to_s)
         @product = Spree::Product.new
         @product.name = articulo.nombre
         @product.permalink = articulo.nombre.downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
