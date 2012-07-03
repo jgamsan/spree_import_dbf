@@ -15,36 +15,38 @@ class ImportProductsRodamoto
   def run
     i = j = 1
     @articulos.each do |articulo|
-      unless articulo.baja == true or Spree::Variant.exists?(:sku => articulo.codigo.to_s)
-        @product = Spree::Product.new
-        @product.name = articulo.nombre
-        @product.permalink = articulo.nombre.downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
-        @product.count_on_hand = articulo.exmin
-        
-        @product.sku = articulo.codigo
-        @product.price = articulo.pvp3
-        @product.cost_price = articulo.pvp1
-        @product.available_on = Date.today - 1.day
-        @product.tire_width_id = set_width(articulo)
-        @product.tire_profile_id = set_profile(articulo)
-        @product.tire_innertube_id = set_innertube(articulo)
-        @product.tire_ic_id = set_ic(articulo)
-        @product.tire_speed_code_id = set_speed_code(articulo)
-        @product.tire_fr_id = set_fr(articulo)
-        @product.tire_tttl_id = set_tttl(articulo)
-        
-        @product.pvp3 = articulo.pvp3 * 1.18
-        @product.pvp7 = articulo.pvp7 * 1.18
-        @product.pvp9 = articulo.pvp9 * 1.18
-        @product.pvp12 = articulo.pvp12 * 1.18
-        
-        @product.taxons << Spree::Taxon.find(set_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i))
-        
-        @product.taxons << Spree::Taxon.find(set_brand(articulo.clamar.to_i))
-        if @product.save!
-          print "Grabado articulo #{i} de: #{@product.name} => Total de baja #{j} => Registro total #{i+j} de #{@total}" 
-          print "\r"
-          i += 1
+      unless articulo.baja == true
+        unless Spree::Variant.exists?(:sku => articulo.codigo.to_s)
+          @product = Spree::Product.new
+          @product.name = articulo.nombre
+          @product.permalink = articulo.nombre.downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
+          @product.count_on_hand = articulo.exmin
+          
+          @product.sku = articulo.codigo
+          @product.price = articulo.pvp3
+          @product.cost_price = articulo.pvp1
+          @product.available_on = Date.today - 1.day
+          @product.tire_width_id = set_width(articulo)
+          @product.tire_profile_id = set_profile(articulo)
+          @product.tire_innertube_id = set_innertube(articulo)
+          @product.tire_ic_id = set_ic(articulo)
+          @product.tire_speed_code_id = set_speed_code(articulo)
+          @product.tire_fr_id = set_fr(articulo)
+          @product.tire_tttl_id = set_tttl(articulo)
+          
+          @product.pvp3 = articulo.pvp3 * 1.18
+          @product.pvp7 = articulo.pvp7 * 1.18
+          @product.pvp9 = articulo.pvp9 * 1.18
+          @product.pvp12 = articulo.pvp12 * 1.18
+          
+          @product.taxons << Spree::Taxon.find(set_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i))
+          
+          @product.taxons << Spree::Taxon.find(set_brand(articulo.clamar.to_i))
+          if @product.save!
+            print "Grabado articulo #{i} de: #{@product.name} => Total de baja #{j} => Registro total #{i+j} de #{@total}" 
+            print "\r"
+            i += 1
+          end
         end      
       end
       j += 1
