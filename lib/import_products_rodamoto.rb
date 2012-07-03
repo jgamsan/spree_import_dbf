@@ -16,6 +16,7 @@ class ImportProductsRodamoto
     i = j = n = 1
     @articulos.each do |articulo|
       unless articulo.baja == true
+        puts "Empiezo articulo #{articulo.codigo}"
         unless Spree::Variant.exists?(:sku => articulo.codigo)
           @product = Spree::Product.new
           @product.name = articulo.nombre
