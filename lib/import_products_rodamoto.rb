@@ -14,7 +14,7 @@ class ImportProductsRodamoto
   
   def run
     i = j = 1
-    articulos.each do |articulo|
+    @articulos.each do |articulo|
       unless articulo.baja == true
         @product = Spree::Product.new
         @product.name = articulo.nombre
