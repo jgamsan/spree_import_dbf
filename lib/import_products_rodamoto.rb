@@ -15,7 +15,7 @@ class ImportProductsRodamoto
   def run
     i = j = n = 1
     @articulos.each do |articulo|
-      unless articulo.baja == true
+      unless articulo.baja == true || articulo.clacat == 15
         puts "Empiezo articulo #{articulo.codigo}"
         unless Spree::Variant.exists?(:sku => articulo.codigo)
           @product = Spree::Product.new
