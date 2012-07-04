@@ -86,6 +86,14 @@ class ImportProductsRodamoto
               return 5
             when 30
               return 14
+            when 34
+              return 17
+            when 35
+              return 20
+            when 36
+              return 23
+            when 38
+              return 26
           end
         when 81
           return 6
@@ -112,7 +120,7 @@ class ImportProductsRodamoto
   end
   
   def set_brand(clamar)
-    22 + clamar.to_i
+    31 + clamar.to_i
   end
   
   def set_width(articulo)
