@@ -42,7 +42,7 @@ class ImportProductsRodamoto
           
           @product.taxons << Spree::Taxon.find(set_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i))
           
-          @product.taxons << Spree::Taxon.find(set_brand(articulo.clamar.to_i))
+          @product.taxons << Spree::Taxon.find(set_brand(articulo.clamar.to_i)) unless articulo.clamar.to_i == 0
           if @product.save!
             print "Grabado articulo #{i} de: #{@product.name} => Total de baja #{j} => Registro total #{i+j} de #{@total}" 
             print "\r"
