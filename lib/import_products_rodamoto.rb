@@ -94,6 +94,8 @@ class ImportProductsRodamoto
               return 23
             when 38
               return 26
+            else
+              return 27
           end
         when 81
           return 6
