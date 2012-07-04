@@ -97,6 +97,8 @@ class ImportProductsRodamoto
           end
         when 81
           return 6
+        when 82
+          return 6
         when 83
           return 7
         when 80
