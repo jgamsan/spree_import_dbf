@@ -65,6 +65,16 @@ class ImportProductsRodamoto
           return 4
         when 30
           return 13
+        when 34
+          return 16
+        when 35
+          return 18
+        when 36
+          return 20
+        when 38
+          return 22
+        else
+          return 23
       end
     else
       case clatipart
