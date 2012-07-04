@@ -116,7 +116,9 @@ class ImportProductsRodamoto
         when 85
           return 21
         when 84
-          return 22   
+          return 22
+        else
+          return 27
       end
     end
   end
