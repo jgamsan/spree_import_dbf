@@ -62,45 +62,45 @@ class ImportProductsRodamoto
     if clacat == 21
       case clasub
         when 28
-          return 10
+          10
         when 29
-          return 4
+          4
         when 30
-          return 13
+          13
       end
     else
       case clatipart
         when 73
           case clasub
             when 28
-              return 10
+              10
             when 29
-              return 5
+              5
             when 30
-              return 14
+              14
           end
         when 81
-          return 6
+          6
         when 82
-          return 6
+          6
         when 83
-          return 7
+          7
         when 80
-          return 8
+          8
         when 64
-          return 16
+          16
         when 79
-          return 17
+          17
         when 65
-          return 18
+          18
         when 77
-          return 19
+          19
         when 78
-          return 20
+          20
         when 85
-          return 21
+          21
         when 84
-          return 22
+          22
       end
     end
   end
@@ -108,22 +108,22 @@ class ImportProductsRodamoto
   def get_catalog(clasub, clatipart, clacat)
     if clacat == 21
       if @clasub.include?(clasub)
-        return false
+        false
       else
-        return true
+        true
       end
     else
       if clatipart == 73
         if @clasub.include?(clasub)
-          return false
+          false
         else
-          return true
+          true
         end
       else
         if @clatipart.include?(clatipart)  
-          return false
+          false
         else
-          return true
+          true
       end
     end
   end
@@ -166,4 +166,5 @@ class ImportProductsRodamoto
     tttl = articulo.tttl
     tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl).id
   end
+end
 end
