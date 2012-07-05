@@ -10,12 +10,14 @@ class ImportProductsRodamoto
   def initialize()
     @articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo.dbf")
     @total = @articulos.count
+    @clasub = [28, 29, 30]
+    @clatipart = [80, 81, 82, 83, 64, 79, 65, 77, 78, 85, 84]
   end
   
   def run
     i = j = n = 1
     @articulos.each do |articulo|
-      unless articulo.baja == true || articulo.clacat == 15 || articulo.codigo == ""
+      unless articulo.baja == true || articulo.clacat == 15 || articulo.codigo == "" || get_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i)
         puts "Empiezo articulo #{articulo.codigo}"
         unless Spree::Variant.exists?(:sku => articulo.codigo)
           @product = Spree::Product.new
@@ -65,16 +67,6 @@ class ImportProductsRodamoto
           return 4
         when 30
           return 13
-        when 34
-          return 16
-        when 35
-          return 18
-        when 36
-          return 20
-        when 38
-          return 22
-        else
-          return 23
       end
     else
       case clatipart
@@ -86,16 +78,6 @@ class ImportProductsRodamoto
               return 5
             when 30
               return 14
-            when 34
-              return 17
-            when 35
-              return 20
-            when 36
-              return 23
-            when 38
-              return 26
-            else
-              return 27
           end
         when 81
           return 6
@@ -119,14 +101,35 @@ class ImportProductsRodamoto
           return 21
         when 84
           return 22
+      end
+    end
+  end
+  
+  def get_catalog(clasub, clatipart, clacat)
+    if clacat == 21
+      if @clasub.include?(clasub)
+        return false
+      else
+        return true
+      end
+    else
+      if clatipart == 73
+        if @clasub.include?(clasub)
+          return false
         else
-          return 27
+          return true
+        end
+      else
+        if @clatipart.include?(clatipart)  
+          return false
+        else
+          return true
       end
     end
   end
   
   def set_brand(clamar)
-    31 + clamar.to_i
+    22 + clamar.to_i
   end
   
   def set_width(articulo)
