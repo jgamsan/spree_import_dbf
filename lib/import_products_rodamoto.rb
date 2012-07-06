@@ -108,22 +108,22 @@ class ImportProductsRodamoto
   def get_catalog(clasub, clatipart, clacat)
     if clacat == 21
       if @clasub.include?(clasub)
-        true
+        return false
       else
-        false
+        return true
       end
     else
       if clatipart == 73
         if @clasub.include?(clasub)
-          true
+          return false
         else
-          false
+          return true
         end
       else
         if @clatipart.include?(clatipart)  
-          true
+          return false
         else
-          false
+          return true
       end
     end
   end
