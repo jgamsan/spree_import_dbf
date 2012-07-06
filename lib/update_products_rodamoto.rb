@@ -7,13 +7,14 @@ require 'dbf'
 
 class UpdateProductsRodamoto
   def initialize()
-    @articulos_new = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo-nuevo.dbf")
+    @articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo-nuevo.dbf")
     @list = @list_updated = []
     @clasub = [28, 29, 30]
     @clatipart = [80, 81, 82, 83, 64, 79, 65, 77, 78, 85, 84]
   end
 
   def run
+    puts "Empezando tarea ........."
     Spree::Product.all.map { |x| @list << x.sku}
     
     @articulos.each do |articulo|
