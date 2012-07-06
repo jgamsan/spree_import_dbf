@@ -124,6 +124,7 @@ class ImportProductsRodamoto
           return false
         else
           return true
+        end
       end
     end
   end
@@ -166,5 +167,4 @@ class ImportProductsRodamoto
     tttl = articulo.tttl
     tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl).id
   end
-end
 end
