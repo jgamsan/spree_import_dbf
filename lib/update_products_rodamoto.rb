@@ -15,10 +15,11 @@ class UpdateProductsRodamoto
 
   def run
     puts "Empezando tarea ........."
-    Spree::Product.all.map { |x| @list << x.sku}
+    Spree::Product.all.map { |x| @list << x.sku }
     
     @articulos.each do |articulo|
        unless articulo.baja == true || articulo.clacat == 15 || articulo.codigo == "" || get_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i) == true
+         puts "Leyendo articulo #{articulo.codigo}"
          @list_updated << articulo.codigo 
        end
     end
