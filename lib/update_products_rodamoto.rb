@@ -21,7 +21,7 @@ class UpdateProductsRodamoto
     CSV.foreach(@articulos) do |row|
        unless row[73] == true || row[85] == 15 || row[1] == "" || get_catalog(row[84].to_i, row[83].to_i, row[85].to_i) == true
          puts "Leyendo articulo #{row[1]}"
-         @list_updated << row 
+         @list_updated << row[1] 
        end
     end
     inter = @list & @list_updated
