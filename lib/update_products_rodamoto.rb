@@ -78,7 +78,7 @@ class UpdateProductsRodamoto
   def create_items_action(list)
     puts "ejecutando accion crear"
     i = 0
-    unless list.empty
+    unless list.empty?
       list.each do |element|
         CSV.foreach(@articulos) do |row|
           if row[1] == element
