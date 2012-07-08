@@ -6,8 +6,9 @@ require 'yaml'
 require 'dbf'
 
 class UpdateProductsRodamoto
+
   def initialize()
-    @articulos = DBF::Table.new("/home/jose/Documentos/rodamoto/articulo-nuevo.dbf")
+    @articulos = "/home/jose/RubymineProjects/articulos-nuevos.csv"
     @list = @list_updated = []
     @clasub = [28, 29, 30]
     @clatipart = [80, 81, 82, 83, 64, 79, 65, 77, 78, 85, 84]
@@ -17,10 +18,10 @@ class UpdateProductsRodamoto
     puts "Empezando tarea ........."
     Spree::Product.all.map { |x| @list << x.sku }
     puts "Leidos los productos ......."
-    @articulos.each do |articulo|
-       unless articulo.baja == true || articulo.clacat == 15 || articulo.codigo == "" || get_catalog(articulo.clasub.to_i, articulo.clatipart.to_i, articulo.clacat.to_i) == true
-         puts "Leyendo articulo #{articulo.codigo}"
-         @list_updated << articulo.codigo 
+    CSV.foreach(@articulos) do |row|
+       unless row[73] == true || row[85] == 15 || row[1] == "" || get_catalog(row[84].to_i, row[83].to_i, row[85].to_i) == true
+         puts "Leyendo articulo #{row[1]}"
+         @list_updated << row 
        end
     end
     inter = @list & @list_updated
@@ -29,7 +30,11 @@ class UpdateProductsRodamoto
     
     puts "Numero de articulos a actualizar #{inter.count}"
     puts "Numero de articulos a borrar #{borrar.count}"
-    puts "Numero de articulos nuevos #{nuevos.count} "
+    puts "Numero de articulos nuevos #{nuevos.count}"
+    
+    delete_items_action(borrar)
+    create_items_action(nuevos)
+    update_items_action(nuevos)
   end
   
   def get_catalog(clasub, clatipart, clacat)
@@ -54,5 +59,17 @@ class UpdateProductsRodamoto
         end
       end
     end
+  end
+  
+  def delete_items_action(list)
+    puts "ejecutado accion borrar"
+  end
+  
+  def create_items_action(list)
+    puts "ejecutado accion crear"
+  end
+  
+  def update_items_action(list)
+    puts "ejecutado accion actualizar"
   end
 end
