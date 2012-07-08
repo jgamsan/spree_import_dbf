@@ -18,7 +18,7 @@ class UpdateProductsRodamoto
     puts "Empezando tarea ........."
     Spree::Product.all.map { |x| @list << x.sku }
     puts "Leidos los productos ......."
-    CSV.foreach(@articulos) do |row|
+    CSV.foreach(@articulos, {headers: true}) do |row|
        unless row[73] == true || row[85] == 15 || row[1] == "" || get_catalog(row[84].to_i, row[83].to_i, row[85].to_i) == true
          puts "Leyendo articulo #{row[1]}"
          @list_updated << row[1] 
@@ -132,7 +132,7 @@ class UpdateProductsRodamoto
             producto.update_attributes(
               :name => row[2],
               :permalink => row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'),
-              :count_on_hand => row[22],
+              :count_on_hand => row[22].to_i,
               :sku => row[1],
               :price => row[52],
               :cost_price => row[6],
