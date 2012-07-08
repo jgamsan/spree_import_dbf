@@ -125,6 +125,7 @@ class UpdateProductsRodamoto
       list.each do |element|
         CSV.foreach(@articulos) do |row|
           if row[1] == element 
+            n = []
             articulo = Spree::Variant.find_by_sku(element)
             producto = articulo.product
             producto.update_attributes(
@@ -147,6 +148,14 @@ class UpdateProductsRodamoto
               :pvp9 = row[58] * 1.18,
               :pvp12 = row[92] * 1.18
             )
+            t = product.taxons.map {|x| x.id}
+            n << set_catalog(row[84].to_i, row[83].to_i, row[85].to_i)
+            n << set_brand(row[86].to_i) unless row[86].to_i == 0
+            unless t == n
+              product.taxons.delete_all
+              product.taxons << Spree::Taxon.find(set_catalog(row[84].to_i, row[83].to_i, row[85].to_i))
+              producto.taxons << Spree::Taxon.find(set_brand(row[86].to_i)) unless row[86].to_i == 0
+            end
             puts "Actualizado producto #{i} de #{total} productos"
           end
         end
