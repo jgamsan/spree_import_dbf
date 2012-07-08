@@ -16,7 +16,8 @@ class UpdateProductsRodamoto
 
   def run
     puts "Empezando tarea ........."
-    Spree::Product.all.map { |x| @list << x.sku }
+    productos = Spree::Variant.find_by_sql("Select is_master, sku from spree_variants where is_master = 't';")
+    @list = productos.map {|x| x.sku}.flatten
     puts "Leidos los productos ......."
     CSV.foreach(@articulos, {headers: true}) do |row|
        unless row[73] == true || row[85] == 15 || row[1] == "" || get_catalog(row[84].to_i, row[83].to_i, row[85].to_i) == true
