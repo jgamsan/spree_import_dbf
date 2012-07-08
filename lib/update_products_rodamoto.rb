@@ -34,7 +34,7 @@ class UpdateProductsRodamoto
     
     delete_items_action(borrar)
     create_items_action(nuevos)
-    update_items_action(nuevos)
+    update_items_action(inter)
   end
   
   def get_catalog(clasub, clatipart, clacat)
@@ -115,6 +115,7 @@ class UpdateProductsRodamoto
         end
       end
     end
+    puts "Creados #{i} articulos en total"
   end
   
   def update_items_action(list)
