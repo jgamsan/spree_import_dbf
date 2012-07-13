@@ -134,10 +134,11 @@ class UpdateProductsRodamoto
       list.each do |element|
         CSV.foreach(@articulos) do |row|
           if row[1] == element
-            n = []
-            articulo = Spree::Variant.find_by_sku(element)
-            producto = articulo.product
-            producto.update_attributes(
+            #n = []
+            ActiveRecord::Base.connection.execute("update spree_variants set pvp3 = #{row[52] * 1.18}, pvp7 = #{row[52] * 1.18}, pvp9 = #{row[58] * 1.18}, pvp12 = #{row[92] * 1.18} where sku = #{row[2]}")
+            #articulo = Spree::Variant.find_by_sku(element)
+            #producto = articulo.product
+            #producto.update_attributes(
               #:name => row[2],
               #:permalink => row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'),
               #:count_on_hand => row[22].to_i,
@@ -152,11 +153,11 @@ class UpdateProductsRodamoto
               #:tire_speed_code_id => set_speed_code(row),
               #:tire_fr_id => set_fr(row),
               #:tire_tttl_id => set_tttl(row),
-              :pvp3 => row[52] * 1.18,
-              :pvp7 => row[56] * 1.18,
-              :pvp9 => row[58] * 1.18,
-              :pvp12 => row[92] * 1.18
-            )
+             # :pvp3 => row[52] * 1.18,
+             # :pvp7 => row[56] * 1.18,
+             # :pvp9 => row[58] * 1.18,
+             # :pvp12 => row[92] * 1.18
+            #)
             #t = producto.taxons.map {|x| x.id}
             #n << set_catalog(row[84].to_i, row[83].to_i, row[85].to_i)
             #n << set_brand(row[86].to_i) unless row[86].to_i == 0
