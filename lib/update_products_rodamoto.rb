@@ -138,32 +138,32 @@ class UpdateProductsRodamoto
             articulo = Spree::Variant.find_by_sku(element)
             producto = articulo.product
             producto.update_attributes(
-              :name => row[2],
-              :permalink => row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'),
-              :count_on_hand => row[22].to_i,
-              :sku => row[1],
-              :price => row[52],
-              :cost_price => row[6],
-              :available_on => Date.today - 1.day,
-              :tire_width_id => set_width(row),
-              :tire_profile_id => set_profile(row),
-              :tire_innertube_id => set_innertube(row),
-              :tire_ic_id => set_ic(row),
-              :tire_speed_code_id => set_speed_code(row),
-              :tire_fr_id => set_fr(row),
-              :tire_tttl_id => set_tttl(row),
+              #:name => row[2],
+              #:permalink => row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'),
+              #:count_on_hand => row[22].to_i,
+              #:sku => row[1],
+              #:price => row[52],
+              #:cost_price => row[6],
+              #:available_on => Date.today - 1.day,
+              #:tire_width_id => set_width(row),
+              #:tire_profile_id => set_profile(row),
+              #:tire_innertube_id => set_innertube(row),
+              #:tire_ic_id => set_ic(row),
+              #:tire_speed_code_id => set_speed_code(row),
+              #:tire_fr_id => set_fr(row),
+              #:tire_tttl_id => set_tttl(row),
               :pvp3 => row[52] * 1.18,
               :pvp7 => row[56] * 1.18,
               :pvp9 => row[58] * 1.18,
               :pvp12 => row[92] * 1.18
             )
-            t = producto.taxons.map {|x| x.id}
-            n << set_catalog(row[84].to_i, row[83].to_i, row[85].to_i)
-            n << set_brand(row[86].to_i) unless row[86].to_i == 0
-            unless t == n
-              producto.taxons.delete_all
-              producto.taxons << Spree::Taxon.find(set_catalog(row[84].to_i, row[83].to_i, row[85].to_i))
-              producto.taxons << Spree::Taxon.find(set_brand(row[86].to_i)) unless row[86].to_i == 0
+            #t = producto.taxons.map {|x| x.id}
+            #n << set_catalog(row[84].to_i, row[83].to_i, row[85].to_i)
+            #n << set_brand(row[86].to_i) unless row[86].to_i == 0
+            #unless t == n
+            #  producto.taxons.delete_all
+            #  producto.taxons << Spree::Taxon.find(set_catalog(row[84].to_i, row[83].to_i, row[85].to_i))
+            #  producto.taxons << Spree::Taxon.find(set_brand(row[86].to_i)) unless row[86].to_i == 0
             end
             print "Actualizado producto #{i} de #{total} productos"
             print "\r"
