@@ -76,7 +76,7 @@ class UpdateProductsRodamoto
       list.each do |element|
         articulo = Spree::Variant.find_by_sku(element)
         producto = articulo.product
-        product.destroy
+        producto.destroy
         i += 1
       end
     end
