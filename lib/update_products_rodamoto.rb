@@ -135,8 +135,8 @@ class UpdateProductsRodamoto
         CSV.foreach(@articulos) do |row|
           if row[1] == element
             #n = []
-            codigo = row[1].to_s
-            ActiveRecord::Base.connection.execute("update spree_variants set pvp3 = #{row[52] * 1.18}, pvp7 = #{row[52] * 1.18}, pvp9 = #{row[58] * 1.18}, pvp12 = #{row[92] * 1.18} where sku = #{codigo}")
+            codigo = row[1]
+            ActiveRecord::Base.connection.execute("update spree_variants set pvp3 = #{row[52] * 1.18}, pvp7 = #{row[52] * 1.18}, pvp9 = #{row[58] * 1.18}, pvp12 = #{row[92] * 1.18} where sku = #{'codigo'}")
             #articulo = Spree::Variant.find_by_sku(element)
             #producto = articulo.product
             #producto.update_attributes(
