@@ -40,7 +40,7 @@ class UpdateProductsRodamoto
     puts "Numero de articulos a borrar #{borrar.count}"
     puts "Numero de articulos nuevos #{nuevos.count}"
     
-    delete_items_action(borrar)
+    #delete_items_action(borrar)
     #create_items_action(nuevos)
     update_items_action(inter)
   end
