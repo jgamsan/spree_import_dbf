@@ -12,6 +12,13 @@ class UpdateProductsRodamoto
     @list = @list_updated = []
     @clasub = [28, 29, 30]
     @clatipart = [80, 81, 82, 83, 64, 79, 65, 77, 78, 85, 84]
+    @widths = CSV.read("#{Rails.root}/db/datas/anchos.csv").map {|x| x[0]}
+    @profiles = CSV.read("#{Rails.root}/db/datas/perfiles.csv").map {|x| x[0]}
+    @llantas = CSV.read("#{Rails.root}/db/datas/llantas.csv").map {|x| x[0]}
+    @ics = CSV.read("#{Rails.root}/db/datas/ics.csv").map {|x| x[0]}
+    @vel = CSV.read("#{Rails.root}/db/datas/vel.csv").map {|x| x[0]}
+    @fr = CSV.read("#{Rails.root}/db/datas/fr.csv").map {|x| x[0]}
+    @tttl = CSV.read("#{Rails.root}/db/datas/tttl.csv").map {|x| x[0]}
   end
 
   def run
@@ -126,7 +133,7 @@ class UpdateProductsRodamoto
     unless list.empty?
       list.each do |element|
         CSV.foreach(@articulos) do |row|
-          if row[1] == element 
+          if row[1] == element
             n = []
             articulo = Spree::Variant.find_by_sku(element)
             producto = articulo.product
@@ -244,36 +251,36 @@ class UpdateProductsRodamoto
   
   def set_width(articulo)
     ancho = articulo[113]
-    ancho == "" ? ancho : Spree::TireWidth.find_by_name(ancho).id
+    ancho == "" ? ancho : @widths.index(ancho) + 1
   end
   
   def set_profile(articulo)
     perfil = articulo[115]
-    perfil == "" ? perfil : Spree::TireProfile.find_by_name(perfil).id
+    perfil == "" ? perfil : @profiles.index(perfil) + 1
   end
   
   def set_innertube(articulo)
     llanta = articulo[117]
-    llanta == "" ? llanta : Spree::TireInnertube.find_by_name(llanta).id
+    llanta == "" ? llanta : @llantas.index(llanta) + 1
   end
   
   def set_ic(articulo)
     ic = articulo[118]
-    ic == "" ? ic : Spree::TireIc.find_by_name(ic).id
+    ic == "" ? ic : @ics.index(ic) + 1
   end
   
   def set_speed_code(articulo)
     vel = articulo[119]
-    vel == "" ? vel : Spree::TireSpeedCode.find_by_name(vel).id
+    vel == "" ? vel : @vel.index(vel) + 1
   end
   
   def set_fr(articulo)
     fr = articulo[120]
-    fr == "" ? fr : Spree::TireFr.find_by_name(fr).id
+    fr == "" ? fr : @fr.index(fr) + 1
   end
   
   def set_tttl(articulo)
     tttl = articulo[121]
-    tttl == "" ? tttl : Spree::TireTttl.find_by_name(tttl).id
+    tttl == "" ? tttl : @tttl.index(tttl) + 1
   end
 end
