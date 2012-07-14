@@ -98,7 +98,7 @@ class UpdateProductsRodamoto
     puts "ejecutando accion crear"
     i = 0
     unless list.empty?
-      list.each do |element|
+      list.each do |row|
         @product = Spree::Product.new
         @product.name = row[2]
         @product.permalink = row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
