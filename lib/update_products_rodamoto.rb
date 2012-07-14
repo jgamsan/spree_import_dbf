@@ -138,9 +138,9 @@ class UpdateProductsRodamoto
       list.each do |row|  
         n = []
         codigo = row[1]
+        puts "Actualizando Codigo #{row[1]}"
         articulo = Spree::Variant.find_by_sku(row[1])
         producto = articulo.product
-        puts "Actualizando Codigo #{row[1]}"
         producto.update_attributes(
           :name => row[2],
           :permalink => row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'),
