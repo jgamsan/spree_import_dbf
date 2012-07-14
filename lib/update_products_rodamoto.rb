@@ -168,7 +168,7 @@ class UpdateProductsRodamoto
           producto.taxons << Spree::Taxon.find(set_catalog(row[84].to_i, row[83].to_i, row[85].to_i))
           producto.taxons << Spree::Taxon.find(set_brand(row[86].to_i)) unless row[86].to_i == 0
         end
-        print "Actualizado producto #{i} de #{total} productos"
+        print "Actualizado producto #{i} de #{total} productos: Codigo #{row[1]}"
         print "\r"
         i += 1
       end
