@@ -85,7 +85,9 @@ class UpdateProductsRodamoto
         puts "Borrando elemento #{element}"
         articulo = Spree::Variant.find_by_sku(element)
         producto = articulo.product
-        producto.destroy
+        unless producto.nil?
+          producto.destroy
+        end
         i += 1
       end
     end
@@ -142,7 +144,8 @@ class UpdateProductsRodamoto
         puts "Actualizando Codigo #{row[1]}"
         articulo = Spree::Variant.find_by_sku(row[1])
         producto = articulo.product
-        producto.update_attributes(
+        unless producto.nil?
+          producto.update_attributes(
           :name => row[2],
           :permalink => row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'),
           :count_on_hand => row[22].to_i,
@@ -161,16 +164,17 @@ class UpdateProductsRodamoto
           :pvp7 => row[56] * 1.18,
           :pvp9 => row[58] * 1.18,
           :pvp12 => row[92] * 1.18
-        )
-        t = producto.taxons.map {|x| x.id}
-        n << set_catalog(row[84].to_i, row[83].to_i, row[85].to_i)
-        n << set_brand(row[86].to_i) unless row[86].to_i == 0
-        unless t == n
-          producto.taxons.delete_all
-          producto.taxons << Spree::Taxon.find(set_catalog(row[84].to_i, row[83].to_i, row[85].to_i))
-          producto.taxons << Spree::Taxon.find(set_brand(row[86].to_i)) unless row[86].to_i == 0
+          )
+          t = producto.taxons.map {|x| x.id}
+          n << set_catalog(row[84].to_i, row[83].to_i, row[85].to_i)
+          n << set_brand(row[86].to_i) unless row[86].to_i == 0
+          unless t == n
+            producto.taxons.delete_all
+            producto.taxons << Spree::Taxon.find(set_catalog(row[84].to_i, row[83].to_i, row[85].to_i))
+            producto.taxons << Spree::Taxon.find(set_brand(row[86].to_i)) unless row[86].to_i == 0
+          end
+          puts "Actualizado producto #{i} de #{total} productos: Codigo #{row[1]}"
         end
-        puts "Actualizado producto #{i} de #{total} productos: Codigo #{row[1]}"
         i += 1
       end
     end
