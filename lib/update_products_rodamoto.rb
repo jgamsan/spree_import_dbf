@@ -48,8 +48,8 @@ class UpdateProductsRodamoto
         crear << row
       end
     end
-    #delete_items_action(borrar)
-    #create_items_action(nuevos)
+    delete_items_action(borrar)
+    create_items_action(crear)
     update_items_action(actualizar)
   end
   
