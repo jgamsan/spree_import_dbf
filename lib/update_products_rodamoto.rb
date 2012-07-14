@@ -82,6 +82,7 @@ class UpdateProductsRodamoto
     i = 0
     unless list.empty?
       list.each do |element|
+        puts "Borrando elemento #{element}"
         articulo = Spree::Variant.find_by_sku(element)
         producto = articulo.product
         producto.destroy
