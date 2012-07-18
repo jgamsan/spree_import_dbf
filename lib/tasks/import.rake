@@ -19,6 +19,18 @@ namespace :products do
     SetHabtmForRodamoto.new.run
   end
   
+  desc "Built Zones.csv"
+  task :built_zones => :environment do
+    require 'built_zones_for_rodamoto'
+    BuiltZonesForRodamoto.new.run
+  end
+  
+  desc "Built Zone_members.csv"
+  task :built_zone_members => :environment do
+    require 'built_zone_members_for_rodamoto'
+    BuiltZoneMembersForRodamoto.new.run
+  end
+  
   desc "Make a txt/csv file."
   task :to_csv  => :environment do
     require 'my_import_products'

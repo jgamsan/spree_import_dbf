@@ -2,13 +2,11 @@ require 'csv'
 require 'active_support'
 require 'action_controller'
 include ActionDispatch::TestProcess
-require 'yaml'
-require 'dbf'
 
 class UpdateProductsRodamoto
 
   def initialize()
-    @articulos = "/home/jose/RubymineProjects/articulos-nuevos.csv"
+    @articulos = "#{Rails.root}/vendor/import/articulos-nuevos.csv"
     @list = @list_updated = []
     @clasub = [28, 29, 30]
     @clatipart = [80, 81, 82, 83, 64, 79, 65, 77, 78, 85, 84]
@@ -102,8 +100,7 @@ class UpdateProductsRodamoto
         @product = Spree::Product.new
         @product.name = row[2]
         @product.permalink = row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-')
-        @product.count_on_hand = row[22]
-        
+        @product.count_on_hand = 10
         @product.sku = row[1]
         @product.price = row[52]
         @product.cost_price = row[6]
@@ -148,8 +145,6 @@ class UpdateProductsRodamoto
           producto.update_attributes(
           :name => row[2],
           :permalink => row[2].downcase.gsub(/\s+/, '-').gsub(/[^a-zA-Z0-9_]+/, '-'),
-          :count_on_hand => row[22].to_i,
-          :sku => row[1],
           :price => row[52],
           :cost_price => row[6],
           :available_on => Date.today - 1.day,
