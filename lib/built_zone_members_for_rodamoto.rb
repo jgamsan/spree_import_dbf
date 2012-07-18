@@ -12,7 +12,7 @@ class BuiltZoneMembersForRodamoto
   def run
     i = 0
     CSV.foreach(@file) do |row|
-      codigo = Spree::Country.find_by_name(row[3]).id
+      codigo = Spree::Country.find_by_name(row[3].to_s.capitalize).id
       @total << [codigo, Spree::Country, row[1]]
       i += 1
       print "Almacenado #{row[3]}"
