@@ -12,10 +12,8 @@ class BuiltZoneMembersForRodamoto
   def run
     i = 0
     CSV.foreach(@file) do |row|
-      codigo = Spree::Country.where('lower(name) like ?', "#{row[3].downcase%}").id
-      @total << [codigo, Spree::Country, row[1]]
+      @total << [row[4], Spree::Country, row[1]]
       i += 1
-      puts "Almacenado #{row[3]}"
     end
     CSV.open(@file_final, "wb") do |csv|
       @total.each do |row|
